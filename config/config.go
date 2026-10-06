@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/caarlos0/env/v11"
 	"github.com/joho/godotenv"
 )
@@ -12,7 +13,7 @@ type Config struct {
 	DBName     string `env:"DB_NAME"`
 	DBHost     string `env:"DB_HOST"`
 	DBPort     int    `env:"DB_PORT"`
-	DBSslMode string `env:"DB_SSLMODE"`
+	DBSslMode  string `env:"DB_SSLMODE"`
 	Port       int    `env:"PORT" envDefault:"8080"`
 }
 
