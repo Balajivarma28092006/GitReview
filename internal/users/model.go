@@ -16,7 +16,6 @@ type User struct {
 
 // without any uuid, the uuid will be generated afterwords
 type CreateRequestUser struct {
-	UserName  string    `json:"username"`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
+	UserName string `json:"username"`
+	Email    string `json:"email"`
 }

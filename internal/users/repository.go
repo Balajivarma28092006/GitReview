@@ -13,3 +13,7 @@ func NewRepository(pool *pgxpool.Pool) *UserRepository {
 		pool: pool,
 	}
 }
+
+/*
+	add crud operations
+*/
