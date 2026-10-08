@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/url"
 	"time"
 
 	"github.com/Balajivarma28092006/GitReview/config"
@@ -21,8 +22,9 @@ func New() (*Service, error) {
 		return nil, err
 	}
 
+	password := url.QueryEscape(cfg.DBPassword)
 	connStr := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s",
-		cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBSslMode)
+		cfg.DBUser, password, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBSslMode)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -31,6 +33,7 @@ func New() (*Service, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to create a connection pool: %w", err)
 	}
+	defer pool.Close()
 
 	if err := pool.Ping(ctx); err != nil {
 		return nil, fmt.Errorf("unable to ping the database: %w", err)
