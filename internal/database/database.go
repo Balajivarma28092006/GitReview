@@ -11,12 +11,12 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type Service struct {
+type DB struct {
 	pool *pgxpool.Pool
 }
 
 // Loads config and creates a new Service and returns that New Service
-func New() (*Service, error) {
+func New() (*DB, error) {
 	cfg, err := config.LoadConfig()
 	if err != nil {
 		return nil, err
@@ -33,26 +33,25 @@ func New() (*Service, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to create a connection pool: %w", err)
 	}
-	defer pool.Close()
 
 	if err := pool.Ping(ctx); err != nil {
 		return nil, fmt.Errorf("unable to ping the database: %w", err)
 	}
 	log.Println("Connceted to postgresSQL successfully.")
-	service := &Service{
+	service := &DB{
 		pool: pool,
 	}
 	return service, nil
 }
 
 // for shutting down the connection pool
-func (s *Service) Close() {
+func (s *DB) Close() {
 	if s.pool != nil {
 		s.pool.Close()
 	}
 }
 
 // accessing the service pool that we can use them in our service modules
-func (s *Service) Pool() *pgxpool.Pool {
+func (s *DB) Pool() *pgxpool.Pool {
 	return s.pool
 }

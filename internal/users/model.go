@@ -5,10 +5,8 @@ import (
 	"uuid"
 )
 
-type UserID uuid.UUID
-
 type User struct {
-	ID        UserID    `json:"id"`
+	ID        uuid.UUID `json:"id"`
 	UserName  string    `json:"username"`
 	Email     string    `json:"email"`
 	CreatedAt time.Time `json:"created_at"`

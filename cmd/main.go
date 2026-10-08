@@ -1,16 +1,12 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/Balajivarma28092006/GitReview/internal/database"
+	"github.com/Balajivarma28092006/GitReview/cmd/app"
 )
 
 func main() {
-	service, err := database.New()
+	err := app.RunApp()
 	if err != nil {
-		fmt.Printf("something went wrong: %v", err)
+		panic(err)
 	}
-	stat := service.Pool().Stat()
-	fmt.Print(stat)
 }
