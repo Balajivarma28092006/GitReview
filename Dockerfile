@@ -1,6 +1,6 @@
 FROM golang:1.27-alpine AS builder
 
-RUN apk add --no-cache git CA-certificates
+RUN apk add --no-cache git ca-certificates
 
 WORKDIR /app 
 
@@ -21,3 +21,4 @@ COPY --from=builder /app/server .
 EXPOSE 8080
 
 CMD ["./server"]
+
