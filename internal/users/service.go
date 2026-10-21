@@ -12,7 +12,7 @@ var InvalidEmail = errors.New("Email is not valid")
 var emailRegex = regexp.MustCompile(`^[a-zA-Z0-9.!#\$%&'*+/=?^_` + "`" + `{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$`)
 
 type UserService interface {
-	AddUser(ctx context.Context, reqUser CreateRequestUser) (*User, error)
+	AddUser(ctx context.Context, reqUser RegisterRequest) (*User, error)
 }
 
 type Services struct {
@@ -25,7 +25,7 @@ func NewService(repo UserRepository) *Services {
 	}
 }
 
-func (service *Services) AddUser(ctx context.Context, reqUser CreateRequestUser) (*User, error) {
+func (service *Services) AddUser(ctx context.Context, reqUser RegisterRequest)(*User, error) {
 	var id uuid.UUID
 
 	id = uuid.New()
@@ -46,7 +46,7 @@ func (service *Services) AddUser(ctx context.Context, reqUser CreateRequestUser)
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	user, err := service.repo.Insert(ctx, user)
+	err := service.repo.Insert(ctx)
 	if err != nil {
 		return nil, err
 	}

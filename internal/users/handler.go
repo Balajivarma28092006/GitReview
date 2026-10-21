@@ -13,7 +13,7 @@ func NewUserHandler(service UserService) *UserHandler {
 }
 
 func (handler *UserHandler) CreateUser(c *gin.Context) {
-	var req CreateRequestUser
+	var req RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{
 			"error": "invalid request body",
