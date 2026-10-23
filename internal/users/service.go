@@ -25,7 +25,7 @@ func NewService(repo UserRepository) *Services {
 	}
 }
 
-func (service *Services) AddUser(ctx context.Context, reqUser RegisterRequest)(*User, error) {
+func (service *Services) AddUser(ctx context.Context, reqUser RegisterRequest) (*User, error) {
 	var id uuid.UUID
 
 	id = uuid.New()
@@ -46,7 +46,7 @@ func (service *Services) AddUser(ctx context.Context, reqUser RegisterRequest)(*
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	err := service.repo.Insert(ctx)
+	err := service.repo.Insert(ctx, user)
 	if err != nil {
 		return nil, err
 	}
